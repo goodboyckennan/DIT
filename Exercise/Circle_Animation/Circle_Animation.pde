@@ -2,7 +2,6 @@
     move circle from left to right and vice versa.
     created Sept. 22,2014
 */
-
 void setup(){
 size(500,500);
 fill(255);
