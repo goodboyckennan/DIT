@@ -5,13 +5,17 @@
 
 void setup(){
 size(500,500);
+fill(255);
 }
 
-int x = 1;
+int x = 25;
+int x2 = 1;
 
 void draw(){
   background(0);
-  fill(255);
-  ellipse(x,100,100,100);
-  ++x;  
+  ellipse(x,height/2,100,100);
+  x+=x2;
+  if(x < 0 || x > width){
+    x2 = -x2;
+  }  
 }
