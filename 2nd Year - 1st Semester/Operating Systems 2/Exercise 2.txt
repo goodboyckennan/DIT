@@ -1,0 +1,27 @@
+/*	Created: Sept. 23, 2014
+	Exercise 2:Write a program to read in up to 100 integers and calculate how many 
+	integers wereneed in before the first integer which is  greater than 150 is read in.
+*/
+
+in#include <stdio.h>
+
+main(){
+
+	int a = 0;
+	int count;
+
+	for(count = 0; count < 100 || a <= 150; count++){ //ERROR: should be an AND instead of an OR
+		printf("enter number: ");
+		scanf("%d",&a);	
+	}
+
+	if(i==) printf("no integer greater than 150 was found.");
+	else printf("%d was found in the %d position" a, count);
+}
+
+/* *A lot of people ave the following loop condition (i<100 || a<= 150)
+   * if we never encounter a number a greater than 150, this will keep on going: with Or only one condition needs to be true.
+   * we want to loop whie both conditions is violated.
+   * (i<100 && a<=150)
+*/
+
