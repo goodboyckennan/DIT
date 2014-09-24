@@ -1,5 +1,9 @@
+//   Created: Sept. 24, 2014
+
+
 void setup(){
   size(500,500);
+  
 }
 
 float boxX = 0.3333;
@@ -14,10 +18,25 @@ int vy = 10;
 void draw(){
  background(0);
   
-  
+  if(toggle){
+     stroke(255,0,0);
+    fill(255,0,0); 
+  }else{
+    if(mouseX >= width*boxX && mouseX <= width*(boxX*2) && mouseY >= height*boxY && mouseY <= height*(boxY*2)){
+      fill(0,0,255);
+      stroke(0,0,255);
+    }
+    else{
+      fill(128);
+      stroke(128);
+    }
+  }
   
   rect(width*boxX,height*boxY,width*boxX,height*boxY);
-
+  
+  
+  stroke(255);
+  fill(255);
 
   ellipse(dx,dy,40,40);
   
@@ -30,9 +49,7 @@ void draw(){
 }
 
 void mousePressed(){
-  if(toggle && mouseX >= width*boxX && mouseX <= width*(boxX*2) && mouseY >= height*boxY && mouseY <= height*(boxY*2)) fill(0,0,100);
-  else fill(100,100,100);
-  
-  toggle = !toggle;
-       
+  if(mouseX >= width*boxX && mouseX <= width*(boxX*2) && mouseY >= height*boxY && mouseY <= height*(boxY*2)){
+    toggle = !toggle;
+  }      
 }
