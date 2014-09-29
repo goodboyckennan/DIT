@@ -1,3 +1,7 @@
+/*
+    Created: Sept. 29,2014
+*/
+
 void setup(){
   size(500,500);
   centX = width/2;
