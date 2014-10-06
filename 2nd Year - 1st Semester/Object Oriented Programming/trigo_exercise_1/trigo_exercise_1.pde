@@ -1,5 +1,9 @@
 /*
   Created: October 6,2014
+  
+  calculate length of string of the kite, 
+  height of the kite from the ground and the distance from the person.
+  Draw a graph of it.
 */
 
 void setup(){
@@ -25,7 +29,7 @@ void draw(){
   text(theta, startPointX+10,startPointY-5);
   
   text("Opposite: " + kiteHeight, startPointX+kiteDistance, startPointY - (kiteHeight/2));
-  text("Adjacent: " + kiteDistance, startPointX + (kiteDistance/2), startPointY+107u);
+  text("Adjacent: " + kiteDistance, startPointX + (kiteDistance/2), startPointY+10);
 }
 
 

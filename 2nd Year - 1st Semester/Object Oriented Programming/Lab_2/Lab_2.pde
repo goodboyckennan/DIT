@@ -1,5 +1,8 @@
-//   Created: Sept. 24, 2014
-
+/*   Created: Sept. 24, 2014
+     The block changes colour when 
+     the mouse hovers on it if toggle=false
+    
+*/
 
 void setup(){
   size(500,500);

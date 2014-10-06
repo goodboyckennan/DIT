@@ -1,6 +1,6 @@
 /*
    Created: Sept. 22, 2014
-   change colour of a corner depending on where the mouse is.
+   change colour of a quadrant depending on where the mouse is.
 */
 
 void setup (){

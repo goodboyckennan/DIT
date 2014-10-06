@@ -1,5 +1,7 @@
 /*
   Created: October 6,2014
+  
+  Converts Decimal to Binary
 */
 
 void setup(){
