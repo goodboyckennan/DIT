@@ -70,13 +70,13 @@ void mousePressed()
     posX = 10;
 
     for(loop = 0; loop < bytes.length; loop++){
-      if(mouseX >= (cellWidth*loop)+10 && mouseX <= (cellWidth*(loop+1))+10 && mouseY >= posY && mouseY <= posY+cellWidth){
+      if(mouseX >= (cellWidth*loop)+posX && mouseX <= (cellWidth*(loop+1))+posX && mouseY >= posY && mouseY <= posY+cellWidth){
         if(bytes[loop] == false){
           bytes[loop] = !bytes[loop];
         }else{
           bytes[loop] = !bytes[loop];
         }         
       }
-      posX = posX+cellWidth;
+      
     }
 }
