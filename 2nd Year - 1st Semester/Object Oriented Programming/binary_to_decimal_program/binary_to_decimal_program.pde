@@ -11,7 +11,7 @@ void setup()
   centY = height / 2;  
   posX = 10;
   posY = 400;
-  cellWidth = (width-posX)/bytes.length;
+  cellWidth = 30;
   
   
   // And set their values here
@@ -23,9 +23,13 @@ void draw()
   posX = 10;
   background(0);
   stroke(127);
-  
+
   // Do some stuff here
-  bytes[0] = true;
+  
+  //test the boolean array
+ // bytes[15] = true;
+  
+  
   for(loop = 0; loop < bytes.length; loop++){
     if(bytes[loop] == true){
       fill(0);
@@ -63,12 +67,16 @@ void mousePressed()
 {
   // Put some code here too
   // To toggle the bit on or off based on the mouse position.
+    posX = 10;
 
     for(loop = 0; loop < bytes.length; loop++){
-      if(mouseX >= (cellWidth*loop)+posX && mouseX <= (cellWidth*(loop+1))+posX && mouseY >= posY && mouseY <= posY+cellWidth){
-        bytes[loop] = true;
+      if(mouseX >= (cellWidth*loop)+10 && mouseX <= (cellWidth*(loop+1))+10 && mouseY >= posY && mouseY <= posY+cellWidth){
+        if(bytes[loop] == false){
+          bytes[loop] = !bytes[loop];
+        }else{
+          bytes[loop] = !bytes[loop];
+        }         
       }
+      posX = posX+cellWidth;
     }
-  
-   
 }
