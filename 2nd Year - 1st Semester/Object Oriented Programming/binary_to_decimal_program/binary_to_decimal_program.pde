@@ -1,9 +1,6 @@
 boolean[] bytes = new boolean[16];
 int centX, centY,posX,posY,cellWidth,loop;
 
-// Probably need to declare some more variables here
-
-
 void setup()
 {
   size(500, 500);
@@ -12,23 +9,14 @@ void setup()
   posX = 10;
   posY = 400;
   cellWidth = 30;
-  
-  
-  // And set their values here
-}
 
+}
 
 void draw()
 {
   posX = 10;
   background(0);
   stroke(127);
-
-  // Do some stuff here
-  
-  //test the boolean array
- // bytes[15] = true;
-  
   
   for(loop = 0; loop < bytes.length; loop++){
     if(bytes[loop] == true){
@@ -65,7 +53,6 @@ int binaryToDecimal(boolean[] bytes)
 
 void mousePressed()
 {
-  // Put some code here too
   // To toggle the bit on or off based on the mouse position.
     posX = 10;
 
@@ -76,7 +63,6 @@ void mousePressed()
         }else{
           bytes[loop] = !bytes[loop];
         }         
-      }
-      
+      }     
     }
 }
