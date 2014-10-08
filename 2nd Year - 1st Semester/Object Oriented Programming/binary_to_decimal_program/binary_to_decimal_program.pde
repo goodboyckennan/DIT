@@ -1,3 +1,7 @@
+/*
+  Created: October 8,2014
+*/
+
 boolean[] bytes = new boolean[16];
 int centX, centY,posX,posY,cellWidth,loop;
 
