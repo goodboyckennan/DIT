@@ -1,6 +1,7 @@
-Player player;
+
 Box[] box = new Box[10];
-int boxSize,score,life,boxSpeed;
+float boxSize,score,life,boxSpeed;
+Player player;
 
 void setup(){
   size(500,500);
@@ -8,100 +9,88 @@ void setup(){
   score = 0;
   life = 3;
   boxSpeed = 1;
-
-  player = new Player(10,500,3,0);
-  /*
-  make for loop to create instance of Box class 
-  w/ their corresponding x,y coordinate
   
+  player = new Player(0,400,boxSize,boxSize);
   for(int i = 0; i < box.length; i++){
-    box[i].setXBox(boxSize*i);
-    box[i].setYBox(boxSize*i);
+    box[i] = new Box(i*boxSize,0,boxSize,boxSize);  
   }
-  */
+ 
 }
 
 void draw(){
   background(0);
-  
-  
-  fill(255);
-  rect(player.getXPos(),player.getYPos(),boxSize,boxSize);
-  
-  text(player.getXPos(),width/2,100);
+
+  for(int i = 0; i < box.length; i++){
+    box[i].display();
+  }
+  update();
+  player.display();
 }
 
 void keyPressed(){
-  if(key == 'd' || key == 'D'){
-     player.moveRight();
-  }
-  else if(key == 'a' || key == 'A'){
-     player.moveLeft();
-  } 
-  
+   if(key == 'a' || key == 'A'){
+      player.moveLeft();
+    }
+    else if(key == 'd' || key == 'D'){
+      player.moveRight();
+    }
+}
+
+void update(){
+    for(int i = 0; i < box.length; i++){
+      box[i].yBox = box[i].yBox + boxSpeed;
+    }    
 }
 
 class Player{
   
   String Name;
-  int xPos = 0;
-  int yPos = 400;
-  int speed = 1;
+  float xPos;
+  float yPos;
+  float playerWidth;
+  float playerHeight; 
+  float speed = 2;
   
   //constructor
-  Player(int xpos, int ypos, int Life, int Score){
-    
-    xpos = xPos;
-    ypos = yPos;
-  } 
-  void setName(String name){
-    name = Name;
-  }
-  void setSpeed(int Speed){
-    Speed = speed;
-  }
-  
-  //getters
-  String getName(){
-    return Name;
-  }
-  int getXPos(){
-    return xPos;
-  }
-  int getYPos(){
-    return yPos;
-  }
-  int getSpeed(){
-    return speed;
-  }
-  
+  Player(float xpos, float ypos, float w, float h){
+    xPos = xpos;
+    yPos = ypos;
+    playerWidth = w;
+    playerHeight = h;
+  }   
   void moveLeft(){
     xPos = xPos - speed; 
   }
   void moveRight(){
       xPos = xPos + speed;
-  }
-
-  
+  }  
+  void display(){
+    fill(255);
+    rect(xPos,yPos,playerWidth,playerHeight);
+  } 
 }
 
 class Box{
-  int xBox;
-  int yBox;
-  
-  void setXBox(int x){
-    x = xBox;
-  }
-  void setYBox(int y){ 
-  }
-  
-  int getXBox(){
-    return xBox;
-  }
-  int getYBox(){
-    return yBox;  
-  }
+  float xBox;
+  float yBox;
+  float boxWidth;
+  float boxHeight;
+  float boxSpeed = 1;
 
+  Box(float x, float y,float w,float h){
+    xBox = x;
+    yBox = y;
+    boxWidth = w;
+    boxHeight = h;   
+  } 
+  void display(){
+    fill(255,0,0);
+    rect(xBox,yBox,boxWidth,boxHeight); 
+  
+    if(yBox > height){
+      yBox = -boxHeight;
+    }  
+  }
 }
 
 
