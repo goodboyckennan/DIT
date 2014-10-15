@@ -1,6 +1,6 @@
-
+Boolean[] boxIsVisible = new boolean[10];
 Box[] box = new Box[10];
-float boxSize,score,life,boxSpeed;
+float boxSize,score,life,boxSpeed,temp;
 Player player;
 
 void setup(){
@@ -9,8 +9,9 @@ void setup(){
   score = 0;
   life = 3;
   boxSpeed = 1;
+  temp = 1;
   
-  player = new Player(0,400,boxSize,boxSize);
+  player = new Player(0,420,boxSize,boxSize);
   for(int i = 0; i < box.length; i++){
     box[i] = new Box(i*boxSize,0,boxSize,boxSize);  
   }
@@ -19,10 +20,12 @@ void setup(){
 
 void draw(){
   background(0);
-
+  
   for(int i = 0; i < box.length; i++){
     box[i].display();
   }
+
+  
   update();
   player.display();
 }
@@ -90,6 +93,10 @@ class Box{
     if(yBox > height){
       yBox = -boxHeight;
     }  
+  }
+  
+  void update(){
+    yBox = yBox + boxSpeed;
   }
 }
 
