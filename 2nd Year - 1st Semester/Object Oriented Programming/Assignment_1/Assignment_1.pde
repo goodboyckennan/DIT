@@ -27,12 +27,13 @@ void draw(){
   }else{
     temp++;
   }
+  
     for(int i = 0; i < box.length; i++){
       if(boxIsVisible[i] == true){
           box[i].display();
       }
     }
-
+  
   
   update();
   player.display();
@@ -100,11 +101,9 @@ class Box{
     fill(255,0,0);
     rect(xBox,yBox,boxWidth,boxHeight); 
   
-    //if statement to check when boxes hit player box
-  
     if(yBox > height){
       yBox = -yBox;
-      boxIsVisible[(int)xBox/(int)boxWidth] = false;
+      boxIsVisible[(int)xBox/ (int)boxWidth] = false;
     }
     
   }
