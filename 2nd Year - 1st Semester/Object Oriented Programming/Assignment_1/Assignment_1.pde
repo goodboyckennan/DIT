@@ -37,6 +37,8 @@ void draw(){
   
   update();
   player.display();
+  
+  displayScoreAndLife();
 }
 
 void keyPressed(){
@@ -46,6 +48,15 @@ void keyPressed(){
     else if(key == 'd' || key == 'D'){
       player.moveRight();
     }
+}
+
+void displayScoreAndLife(){
+  fill(0,255,0);
+  textAlign(CENTER);
+  text("Life: " + (int)life, width-35,10);
+  
+  textAlign(CENTER);
+  text("Score: " + (int)score, width-30,20);
 }
 
 void update(){
@@ -63,7 +74,7 @@ class Player{
   float yPos;
   float playerWidth;
   float playerHeight; 
-  float speed = 2;
+  float speed = 4;
   
   //constructor
   Player(float xpos, float ypos, float w, float h){
