@@ -22,22 +22,22 @@ void draw(){
   background(0);
   if(temp%50 == 0){
     int r = (int)random(10);
-    boxIsVisible[r] = true;
+    box[r].isVisible = true;
     temp = 1;
   }else{
     temp++;
   }
   
     for(int i = 0; i < box.length; i++){
-      if(boxIsVisible[i] == true){
+      if(box[i].isVisible == true){
           box[i].display();
       }
     }
   
   
-  update();
-  player.display();
   
+  player.display();
+  update();
   displayScoreAndLife();
 }
 
@@ -61,7 +61,7 @@ void displayScoreAndLife(){
 
 void update(){
     for(int i = 0; i < box.length; i++){
-      if(boxIsVisible[i] == true){
+      if(box[i].isVisible == true){
         box[i].yBox = box[i].yBox + boxSpeed;
       }
     }    

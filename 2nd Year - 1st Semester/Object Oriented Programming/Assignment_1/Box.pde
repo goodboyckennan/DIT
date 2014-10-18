@@ -4,6 +4,7 @@ class Box{
   float boxWidth;
   float boxHeight;
   float boxSpeed = 1;
+  boolean isVisible = false;
 
   Box(float x, float y,float w,float h){
     xBox = x;
@@ -17,7 +18,7 @@ class Box{
   
     if(yBox > height){
       yBox = -yBox;
-      boxIsVisible[(int)xBox/ (int)boxWidth] = false;
+      box[(int)xBox/ (int)boxWidth].isVisible = false;
     }
     
   }
