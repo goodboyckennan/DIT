@@ -13,18 +13,14 @@ class Box{
     boxHeight = h;   
   } 
   void display(){
+    noStroke();
     fill(255,0,0);
     rect(xBox,yBox,boxWidth,boxHeight); 
   
     if(yBox > height){
       yBox = -yBox;
       box[(int)xBox/ (int)boxWidth].isVisible = false;
-    }
-    
-  }
-  
-  void update(){
-    yBox = yBox + boxSpeed;
+    }  
   }
 }
 

@@ -5,7 +5,7 @@ class Player{
   float yPos;
   float playerWidth;
   float playerHeight; 
-  float speed = 4;
+  float speed = 1;
   
   //constructor
   Player(float xpos, float ypos, float w, float h){
@@ -21,6 +21,7 @@ class Player{
       xPos = xPos + speed;
   }  
   void display(){
+   
     fill(255);
     rect(xPos,yPos,playerWidth,playerHeight);
   } 
