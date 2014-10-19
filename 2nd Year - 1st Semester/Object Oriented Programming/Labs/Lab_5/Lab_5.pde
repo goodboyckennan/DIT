@@ -1,55 +1,78 @@
-/*
-    Created: October 14,2014
-    
+/*  
     Plot the data for iOS and Android queries;
 */
-
-int[] daysInMonth = {31,28,31,30,31,30,31,31,30,31,30,31};
-int[] androidByMonth = new int[12];
-int[] iosByMonth = new int[12];
-int[] android;
-int[] ios;
-String[] lines;
-
-
 void setup()
 {
-  size(500, 500);
-  loadData();
-  
-  for(int i = 0; i < androidByMonth.length; i++ ){
-    println(androidByMonth[i]);
-  }
+ size(500, 500);
+ loadData(); 
+ 
 }
+
+int[] android;
+int[] ios;
+int[] androidBymonthCount;
+int[] iosBymonthCount;
+int androidDays;
+int iosDays;
+
+int[] daysInmonthCount = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 void loadData()
 {
-  lines = loadStrings("tunepalqueries.csv");
+  String[] lines = loadStrings("tunepalqueries.csv");
   android = new int[lines.length];
-  ios = new int[lines.length];  
- 
-  int dayCount = 0;
+  ios = new int[lines.length];
+  
+  androidBymonthCount = new int[12];
+  iosBymonthCount = new int[12];
+  
   int monthCount = 0;
-  
-  for(int i = 0; i < lines.length; i++){
-    String[] data = split(lines[i],",");
-    
-    
-    if(dayCount < daysInMonth[monthCount]){
-      androidByMonth[monthCount] = androidByMonth[monthCount] + Integer.parseInt(data[1]); 
-      iosByMonth[monthCount] = iosByMonth[monthCount] + Integer.parseInt(data[2]);
-    }else{
-      monthCount++;
+  int dayCount = 0;
+  for (int i = 0 ; i < lines.length ; ++ i)
+  {
+    String[] data = split(lines[i], ",");
+    android[i] = Integer.parseInt(data[1]); 
+    ios[i] = Integer.parseInt(data[2]);
+    if (dayCount == daysInmonthCount[monthCount])
+    {
       dayCount = 0;
+      monthCount ++;
     }
-    dayCount++;
-  }
-  
+    else
+    {
+      dayCount ++;
+    }  
+    androidBymonthCount[monthCount] += android[i];
+    iosBymonthCount[monthCount] += ios[i];
+  }  
 }
 
 void draw()
 {
-  background(0);
+  stroke(0, 0, 255);
+  
+  float gap = (float) width / 24;
+
+  int max = Integer.MIN_VALUE;
+  for (int i = 0 ; i < 12 ; i ++)
+  {
+    if (iosBymonthCount[i] > max)
+    {
+      max = iosBymonthCount[i];
+    }
+  }
+  
+  float scaleFactor = (float) height / max;
+  
+  for (int i = 0 ; i < 12 ; i ++)
+  {
+    stroke(0,0,255);
+    fill(0,0,255);    
+    rect(i * (gap * 2.0f), height, gap, - (androidBymonthCount[i] * scaleFactor));
+    stroke(255,0,0);
+    fill(255,0,0);    
+    rect(i * (gap * 2.0f) + gap , height, gap, - (iosBymonthCount[i] * scaleFactor));     
+  }
   
   
   
