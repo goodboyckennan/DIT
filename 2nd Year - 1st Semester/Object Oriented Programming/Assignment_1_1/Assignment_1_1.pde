@@ -1,24 +1,61 @@
 Player player;
+RainDrop[] rain = new RainDrop[10];
 float boxSize;
-int score,life;
+int score,life,boxSpeed,count;
 
 void setup(){
   size(500,500);
   score = 0;
   life = 3;
+  boxSpeed = 1;
   boxSize = width/10;
+  count = 1;
   
   player = new Player(0,height-(boxSize*2),boxSize,boxSize);
+  for(int i = 0; i < rain.length; i++){
+    rain[i] = new RainDrop(i*boxSize,0,boxSize,boxSize);
+  }
 }
 
 void draw(){
   background(255);
   
+  if(count%70 == 0){
+    int r = (int)random(10);
+   
+    rain[r].isVisible = true;
+    count = 1;
+  }else{
+    count++;
+  }
+  
+  for(int i = 0; i < rain.length; i++){
+    if(rain[i].isVisible == true){
+      rain[i].display();
+    }
+  }
+  
   player.display();
+  update();
   displayFlowers();
 }
 
-
+void update(){
+  for(int i = 0; i < rain.length; i++){
+   
+    if(rain[i].isVisible == true){
+      //Box collision code here
+      if(rain[i].xDrop+boxSize > player.xPos && rain[i].xDrop < player.xPos+boxSize && rain[i].yDrop+boxSize > player.yPos){
+        rain[i].isVisible = false;
+        life--;
+      }
+      rain[i].yDrop = rain[i].yDrop + boxSpeed;
+    }
+    
+    
+    
+  }
+}
 
 
 void keyPressed(){
