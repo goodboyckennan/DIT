@@ -13,8 +13,11 @@ int cellWidth = 5;
 int cellHeight = 5;
 int boardWidth;
 int boardHeight;
+int fps = 60;
+boolean toggle = false;
 
 void setup(){
+  
   size(500,500);
   boardWidth = width/cellWidth;
   boardHeight = height/cellHeight;
@@ -26,7 +29,12 @@ void setup(){
 
 void draw(){
   background(0);
-
+  frameRate(fps);
+  
+  if(toggle == false){
+  randomise();
+  update();  
+  }
   
   for(int row = 0; row < boardHeight; row++){
     for(int col = 0; col < boardWidth; col++){
@@ -39,7 +47,8 @@ void draw(){
         fill(0);
       }
     }
-  }  
+  }
+  println(fps);
 }
 
 int countNeighbours(int row, int col){
@@ -102,7 +111,27 @@ void update(){
 }
 
 void randomise(){
+  for(int row = 0; row < boardHeight; row++){
+    for(int col = 0; col < boardWidth; col++){
+      float f = random(0,1);
+      if(f > 0.5f){
+        board[row][col] = true;
+      }
+    }
+  }
+  
+}
 
+void keyPressed(){
+    if(keyCode == LEFT){
+        if(fps > 1){
+          fps--;
+        }    
+    }else if(keyCode == RIGHT){
+      fps++;
+    }else if(keyCode == ' '){
+      toggle = !toggle;
+    }
 }
 
 
