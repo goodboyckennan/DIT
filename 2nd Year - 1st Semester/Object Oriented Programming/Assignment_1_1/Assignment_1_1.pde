@@ -53,12 +53,8 @@ void update(){
         rain[i].yDrop = 0;
         rain[i].isVisible = false;
         life--;
-      }
-      
+      }     
     }
-    
-    
-    
   }
 }
 
@@ -73,11 +69,12 @@ void keyPressed(){
 }
 
 void displayFlowers(){
-  
+  PImage cloud = loadImage("cloud.png");
   PImage red_flower = loadImage("red_flower.png");
   PImage blue_flower = loadImage("blue_flower.png");
   PImage pink_flower = loadImage("pink_flower.png");
  
+ //display flowers
   image(red_flower,0,450);
   image(blue_flower,50,450);
   image(pink_flower,100,450);
@@ -88,6 +85,15 @@ void displayFlowers(){
   image(blue_flower,350,450);
   image(pink_flower,400,450);
   image(red_flower,450,450);
+  
+  //display clouds
+  image(cloud,0,-25);
+  image(cloud,75,-30);
+  image(cloud,180,-10);
+  image(cloud,240,-30);
+  image(cloud,360,-15); 
+  image(cloud,450,-5);
+  image(cloud,550,-25);
 }
 
 

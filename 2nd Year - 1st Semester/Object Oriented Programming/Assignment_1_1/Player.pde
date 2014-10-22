@@ -5,7 +5,7 @@ class Player{
   float yPos;
   float playerWidth;
   float playerHeight; 
-  float speed = 2;
+  float speed = 4;
   PImage playerUmbrella;
   
   //constructor
