@@ -13,7 +13,7 @@ class RainDrop{
     dropHeight = h;
   }
   void display(){
-    rainDrop = loadImage("good_raindrop.jpg");    
+    rainDrop = loadImage("good_raindrop.png");    
     image(rainDrop,xDrop,yDrop);
     
     if(yDrop > height){
