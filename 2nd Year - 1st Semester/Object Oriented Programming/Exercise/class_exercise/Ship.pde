@@ -3,6 +3,7 @@ class Ship{
  float x, y;
  float w = 20;
  float h = 20;
+ float theta = 0;
  
  Ship(){  
    x = 250;
@@ -23,7 +24,9 @@ class Ship{
    this.h = h;
  }
  
- void display(){       
+ void display(){ 
+  
+  rotate(theta);   
   float halfWidth = w / 2;
   float halfHeight = h / 2;
     
@@ -41,9 +44,9 @@ class Ship{
       }else if(key == 's' || key == 'S'){
         y++;
       }else if(key == 'a' || key == 'A'){
-        x--;
+        theta -= 0.1f;
       }else if(key == 'd'  || key == 'D'){
-        x++;
+        theta += 0.1f;
       }
     
    } 
