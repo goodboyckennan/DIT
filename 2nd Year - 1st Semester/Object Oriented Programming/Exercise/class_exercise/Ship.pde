@@ -26,14 +26,19 @@ class Ship{
  
  void display(){ 
   
+  translate(x,y);
   rotate(theta);   
   float halfWidth = w / 2;
   float halfHeight = h / 2;
+  
+  /*
     
-  line(x - halfWidth, y + halfHeight, x, y - halfHeight);
-  line(x, y - halfHeight, x + halfWidth, y + halfHeight);
-  line(x + halfWidth, y + halfHeight, x, y);
-  line(x, y, x - halfWidth, y + halfHeight); 
+  */
+    
+  line(-halfWidth, halfHeight,0, - halfHeight);
+  line(0,  - halfHeight, halfWidth,  halfHeight);
+  line(halfWidth,  halfHeight, 0, 0);
+  line(0,0,  - halfWidth,  halfHeight); 
    
  }
  

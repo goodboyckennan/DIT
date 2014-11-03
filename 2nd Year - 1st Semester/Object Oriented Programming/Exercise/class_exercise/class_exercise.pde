@@ -17,12 +17,8 @@ void setup(){
   
   size(500,500);
   ship1 = new Ship(100,100);
-  ship2 = new Ship(200,200);
+ // ship2 = new Ship(200,200);
   //ship3 = new Ship(100,100,60,70);
-  
-  ship2 = ship1;
-  ship1.x = 300;
-  ship2.x = 400;
   
 }
 
@@ -33,8 +29,8 @@ void draw(){
   ship1.move();
   ship1.display();
   
-  ship2.move();
-  ship2.display();
+  //ship2.move();
+  //ship2.display();
   
   //ship3.move();
   //ship3.display();
