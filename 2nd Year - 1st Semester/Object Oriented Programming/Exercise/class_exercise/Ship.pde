@@ -44,13 +44,13 @@ class Ship{
  
  void move(){
     if(keyPressed){
-      if(key == 'w' || key == 'W'){
+      if(key == 'w'){
         y--;
-      }else if(key == 's' || key == 'S'){
+      }else if(key == 's'){
         y++;
-      }else if(key == 'a' || key == 'A'){
+      }else if(key == 'a'){
         theta -= 0.1f;
-      }else if(key == 'd'  || key == 'D'){
+      }else if(key == 'd'){
         theta += 0.1f;
       }
     
