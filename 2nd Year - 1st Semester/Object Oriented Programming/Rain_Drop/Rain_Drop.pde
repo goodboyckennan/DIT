@@ -6,7 +6,8 @@
   3. block falling stars for +1 life(optional)
   
   add more functions:
-  - make flowers the life counter, dissapears when hit by acid rain.
+  - make flowers the life counter, 
+  dissapears when hit by acid rain - suggestion by bleachorage.
 */
 
 import ddf.minim.*;
