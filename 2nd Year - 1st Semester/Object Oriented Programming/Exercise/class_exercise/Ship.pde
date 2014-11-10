@@ -26,26 +26,29 @@ class Ship{
  
  void display(){ 
   
+  pushMatrix(); 
   translate(x,y);
   rotate(theta);   
   float halfWidth = w / 2;
   float halfHeight = h / 2;
-  
-  /*
-    
-  */
+
     
   line(-halfWidth, halfHeight,0, - halfHeight);
   line(0,  - halfHeight, halfWidth,  halfHeight);
   line(halfWidth,  halfHeight, 0, 0);
   line(0,0,  - halfWidth,  halfHeight); 
+  popMatrix(); 
    
  }
  
  void move(){
+   float lx,ly;
+   lx = sin(theta);
+   ly = -cos(theta);
     if(keyPressed){
       if(key == 'w'){
-        y--;
+        x += lx;
+        y += ly;
       }else if(key == 's'){
         y++;
       }else if(key == 'a'){
