@@ -23,12 +23,14 @@
 
 Ship ship1,ship2;
 Polygon p;
+Bug bug;
 
 void setup(){
   
   size(500,500);
   ship1 = new Ship(100,100);
   ship2 = new Ship(200,200);
+  bug = new Bug(300,300,3);
   p = new Polygon(400,400,5,50);
   
   
@@ -47,6 +49,8 @@ void draw(){
   
   p.display();
   p.move();
+  
+  bug.display();
   
 }
 
