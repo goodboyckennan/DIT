@@ -1,5 +1,5 @@
-class Bug{
-  float x,y,size;
+class Bug extends GameObject{
+  float size;
   
   Bug(float xPos, float yPos, float size){
     this.x = xPos;
@@ -18,5 +18,8 @@ class Bug{
     
     popMatrix();
   }
-
+  
+  void move(){
+  
+  }
 }

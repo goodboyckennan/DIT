@@ -28,6 +28,8 @@ Bug bug;
 Star star;
 void setup(){
   
+  gameObject = new GameObject[5];
+  
   size(500,500);
   ship1 = new Ship(100,100);
   ship2 = new Ship(200,200);
