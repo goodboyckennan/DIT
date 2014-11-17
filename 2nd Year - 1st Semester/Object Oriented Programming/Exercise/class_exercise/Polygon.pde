@@ -1,8 +1,8 @@
-class Polygon{
-  float x,y,sides,radius;
+class Polygon extends GameObject{
+  float sides,radius;
   
  Polygon(){
-   this(width/2,height/2,100,5); 
+   this(width/2,height/2,5,50); 
  } 
  Polygon(float xPos, float yPos, float sides, float radius){
    
@@ -21,12 +21,12 @@ class Polygon{
     float thetaInc = TWO_PI/sides;
     float px,py;
     float lastx= 0;
-    float lasty = radius;
+    float lasty = -radius;
     
     for(int i = 1; i <= sides; i++){
       theta = i* thetaInc;
       px = sin(theta) * radius;
-      py = cos(theta) * radius;
+      py = -cos(theta) * radius;
  
       line(lastx,lasty,px,py);
       lastx = px;

@@ -1,9 +1,7 @@
-class Ship{
+class Ship extends GameObject{
   
- float x, y;
  float w = 20;
  float h = 20;
- float theta = 0;
  
  Ship(){  
    x = 250;

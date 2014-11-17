@@ -18,13 +18,14 @@
     * takes in x,y parameters
   - constructor chaining
     * calling another constucto
-  
+  -inheritance
+    * take codes that are common in 
 */
 
 Ship ship1,ship2;
 Polygon p;
 Bug bug;
-
+Star star;
 void setup(){
   
   size(500,500);
@@ -32,6 +33,8 @@ void setup(){
   ship2 = new Ship(200,200);
   bug = new Bug(300,300,3);
   p = new Polygon(400,400,5,50);
+  
+  star = new Star(200,200,5,50,1);
   
   
 }
@@ -51,6 +54,9 @@ void draw(){
   p.move();
   
   bug.display();
+  
+  star.display();
+  star.move();
   
 }
 
