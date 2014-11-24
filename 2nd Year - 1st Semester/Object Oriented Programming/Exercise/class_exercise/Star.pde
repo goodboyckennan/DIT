@@ -3,15 +3,15 @@ float points,radius;
 
   
  Star(){
-   this(width/2,height/2,5,50,1); 
+   this(width/2,height/2,5,50); 
  } 
- Star(float xPos, float yPos, float points, float radius,float theta){
+ Star(float xPos, float yPos, float points, float radius){
    
    this.x = xPos;
    this.y = yPos;
    this.points = points;
    this.radius = radius; 
-   this.theta = theta;
+   this.theta = 0;
  }
  
   

@@ -7,5 +7,6 @@ class GameObject{
   }
   
   void display(){
+      println("display getting called");
   }
 }

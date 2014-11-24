@@ -22,43 +22,43 @@
     * take codes that are common in 
 */
 
-Ship ship1,ship2;
-Polygon p;
-Bug bug;
+GameObject[] gameObjects;
 Star star;
+ArrayList<GameObject> objects = new ArrayList<GameObject>();
 void setup(){
   
-  gameObject = new GameObject[5];
-  
+  gameObjects = new GameObject[6];
   size(500,500);
-  ship1 = new Ship(100,100);
-  ship2 = new Ship(200,200);
-  bug = new Bug(300,300,3);
-  p = new Polygon(400,400,5,50);
   
-  star = new Star(200,200,5,50,1);
+  gameObjects[0] = new Ship(100,100);
+  gameObjects[1] = new Ship(200,200);
+  gameObjects[2] = new Ship(400,400,20,20);
+  
+  
+  star = new Star(200,200,5,50);
+  gameObjects[3] = star;
+  gameObjects[4] = new Bug();
+  gameObjects[5] = new Bullet();
+  
   
   
 }
 
 void draw(){
   background(0);
-  stroke(255);
   
-  ship1.move();
-  ship1.display();
-  
-  
-  ship2.move();
-  ship2.display();
-  
-  p.display();
-  p.move();
-  
-  bug.display();
-  
-  star.display();
-  star.move();
+   for (int i = 0 ; i < gameObjects.length ; i ++)
+  {
+    gameObjects[i].move();
+    gameObjects[i].display();
+    // Use instance of to check to see if an instance is an instance of a particular class
+    if (gameObjects[i] instanceof Star)
+    {
+      Star star = (Star) gameObjects[i];
+      star.radius += 1;
+    }
+  }  
+ 
   
 }
 
