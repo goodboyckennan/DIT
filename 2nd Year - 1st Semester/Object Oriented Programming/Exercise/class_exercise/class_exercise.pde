@@ -32,7 +32,7 @@ void setup(){
   
   gameObjects[0] = new Ship(100,100);
   gameObjects[1] = new Ship(200,200);
-  gameObjects[2] = new Ship(400,400,20,20);
+  gameObjects[2] = new Polygon(400,400,5,50);
   
   
   star = new Star(200,200,5,50);
