@@ -20,6 +20,12 @@
     * calling another constucto
   -inheritance
     * take codes that are common in 
+  -superclass
+    *the class that is being extended by other class
+  -subclass
+    *classes that extends another class
+  -override
+  
 */
 
 GameObject[] gameObjects;
@@ -55,11 +61,8 @@ void draw(){
     if (gameObjects[i] instanceof Star)
     {
       Star star = (Star) gameObjects[i];
-      star.radius += 1;
     }
   }  
- 
-  
 }
 
 
