@@ -5,22 +5,22 @@ class Ship extends GameObject{
  float fireRate = 5;
  
  Ship(){  
-   x = 250;
-   y = 250;
+   position.x = 250;
+   position.y = 250;
    w = 20;
    h = 20; 
    colour = color(255);  
  }
  
  Ship(float x, float y){
-   this.x = x;  
-   this.y = y;
+   position.x = x;
+   position.y = y;
    colour = color(255);  
  }
  
  Ship(float x, float y, float w, float h){
-   this.x = x;
-   this.y = y;
+   position.x = x;
+   position.y = y;
    this.w = w;
    this.h = h;
    colour = color(255);  
@@ -29,7 +29,7 @@ class Ship extends GameObject{
  void display(){ 
   
   pushMatrix(); 
-  translate(x,y);
+  translate(position.x,position.y);
   rotate(theta);
 
   stroke(colour);  
@@ -46,19 +46,17 @@ class Ship extends GameObject{
  }
  
  void move(){
-   float lx, ly;
-    lx = sin(theta);
-    ly = -cos(theta);
+    forward.x = sin(theta);
+    forward.y = -cos(theta);
     if (keyPressed)
     {
       switch (key)
       {
         case 'w':
-          x = x + lx;
-          y = y + ly;
+          position.add(forward);
           break;
         case 's':
-          y = y + 1;
+          position.sub(forward);
           break;
         case 'a':
           theta -= 0.1f;
@@ -68,15 +66,12 @@ class Ship extends GameObject{
           break;  
         case ' ':
           Bullet bullet = new Bullet();
-          bullet.x = x;
-          bullet.y = y;
+          bullet.position = position.get();
           bullet.theta = theta;
           int count = 0;
-           if((frameRate/fireRate) = count ){
+          
             objects.add(bullet);   
-           }else{
-             count++;
-           }   
+             count++;  
       }
     }
   }

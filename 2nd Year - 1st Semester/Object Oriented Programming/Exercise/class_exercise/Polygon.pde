@@ -6,8 +6,8 @@ class Polygon extends GameObject{
  } 
  Polygon(float xPos, float yPos, float sides, float radius){
    
-   this.x = xPos;
-   this.y = yPos;
+   position.x = xPos;
+   position.y = yPos;
    this.sides = sides;
    this.radius = radius; 
  }
@@ -15,7 +15,7 @@ class Polygon extends GameObject{
   
   void display(){
     pushMatrix();
-    translate(x,y);
+    translate(position.x,position.y);
     
     float theta = 0;
     float thetaInc = TWO_PI/sides;

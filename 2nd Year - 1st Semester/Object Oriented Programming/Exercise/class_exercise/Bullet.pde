@@ -2,23 +2,25 @@ class Bullet extends GameObject
 {
   Bullet()
   {
-    x = width / 2;
-    y = height / 2;
+    position.x = width / 2;
+    position.y = height / 2;
   }
   
   void move()
   {
-    float lx = sin(theta);
-    float ly = -cos(theta);
+    forward.x = sin(theta);
+    forward.y = -cos(theta);
     float speed = 10.0f;
-    x += lx * speed;
-    y += ly * speed;
+    
+    PVector velocity = PVector.mult(forward,speed);
+    position.add(forward);
+    
   }
   
   void display()
   {
     pushMatrix();
-    translate(x, y);
+    translate(position.x,position.y);
     rotate(theta);
     line(0, - 5, 0, 5);
     popMatrix();

@@ -34,6 +34,7 @@ void setup(){
   size(500,500);
   objects.add(new Ship(100,100));
   objects.add(new Ship(200,200));
+  objects.add(new Star(100,100,50,5));
     
 }
 

@@ -5,8 +5,8 @@ class Star extends GameObject
   
   Star(float x, float y, float radius, float points)
   {
-    this.x = x;
-    this.y = y;
+    position.x = x;
+    position.y = y;
     this.radius = radius;
     this.points = points;
     this.theta = 0;
@@ -14,7 +14,7 @@ class Star extends GameObject
   
   Star()
   {
-    this(width / 2, height / 2, 100, 5);
+    this(width / 2, height / 2, 50, 5);
   }
   
   void move()
@@ -25,7 +25,7 @@ class Star extends GameObject
   void display()
   {
     pushMatrix();
-    translate(x, y);
+    translate(position.x, position.y);
     rotate(theta);
     
     float px, py;
