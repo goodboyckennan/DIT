@@ -3,6 +3,7 @@ class Ship extends GameObject{
  float w = 20;
  float h = 20;
  float fireRate = 5;
+ PImage rat = loadImage("rat.png");
  
  Ship(){  
    position.x = 250;
@@ -35,12 +36,20 @@ class Ship extends GameObject{
   stroke(colour);  
   float halfWidth = w / 2;
   float halfHeight = h / 2;
-
-    
+  
+  /*
   line(-halfWidth, halfHeight,0, - halfHeight);
   line(0,  - halfHeight, halfWidth,  halfHeight);
   line(halfWidth,  halfHeight, 0, 0);
   line(0,0,  - halfWidth,  halfHeight); 
+  */
+  
+  triangle(0,-15,-10,0,+10,0);
+  ellipse(0,10,20,35);
+  
+  
+  
+  
   popMatrix(); 
    
  }
