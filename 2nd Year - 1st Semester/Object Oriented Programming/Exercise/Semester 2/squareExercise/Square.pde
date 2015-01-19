@@ -23,7 +23,7 @@ class Square{
      dim = 0.5f;
    }
    noStroke();
-   fill(colour * dim);
+   fill(red(colour) * dim,green(colour) * dim,blue(colour) * dim);
    rect(pos.x,pos.y,w,h);
  }
 }
