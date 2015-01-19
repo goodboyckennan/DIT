@@ -22,7 +22,7 @@ class Square{
    }else{
      dim = 0.5f;
    }
-   stroke(colour * dim);
+   noStroke();
    fill(colour * dim);
    rect(pos.x,pos.y,w,h);
  }
