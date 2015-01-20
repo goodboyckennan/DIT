@@ -1,17 +1,14 @@
 class Square{
  color colour;
  PVector pos;
- float w,h;
  
  Square(){
    //constructor chaining
-   this(width/2,height/2,50,50,color(255,255,255)); 
+   this(width/2,height/2,color(255,255,255)); 
  }
  
- Square(int x, int y, float w, float h, color c){
+ Square(float x, float y, color c){
    pos = new PVector(x,y);
-   this.w = w;
-   this.h = h;
    this.colour = c;
  }
  
