@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TaskDescEditText"
+        android:layout_marginTop="23dp"
+        android:inputType="text"
+        android:layout_below="@+id/TaskNameEditText"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/IDEditText"
+        android:layout_marginTop="67dp"
+        android:inputType="text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TaskNameEditText"
+        android:layout_marginTop="24dp"
+        android:inputType="text"
+        android:layout_below="@+id/IDEditText"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ID:"
+        android:id="@+id/IDTextView"
+        android:layout_alignBottom="@+id/IDEditText"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="37dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Task name:"
+        android:id="@+id/TaskNameTextView"
+        android:layout_below="@+id/IDEditText"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Description:"
+        android:id="@+id/DescriptionTextView"
+        android:layout_below="@+id/TaskNameEditText"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Status:"
+        android:id="@+id/StatusTextView"
+        android:layout_below="@+id/TaskDescEditText"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TaskStatusEditText"
+        android:inputType="text"
+        android:layout_below="@+id/StatusTextView"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Data"
+        android:id="@+id/addDataButton"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/TaskStatusEditText"
+        android:layout_toEndOf="@+id/StatusTextView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Data"
+        android:id="@+id/showDataButton"
+        android:layout_alignTop="@+id/addDataButton"
+        android:layout_toEndOf="@+id/addDataButton" />
+
+</RelativeLayout>
