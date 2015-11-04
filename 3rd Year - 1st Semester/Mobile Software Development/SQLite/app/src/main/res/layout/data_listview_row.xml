@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/task_id_text"
+        android:id="@+id/taskIdTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:lines="2"
+        android:layout_toStartOf="@+id/taskNameTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/task_name_text"
+        android:id="@+id/taskNameTextView"
+        android:lines="2"
+        android:layout_alignTop="@+id/taskIdTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/task_desc_text"
+        android:id="@+id/taskDescTextView"
+        android:layout_below="@+id/taskIdTextView"
+        android:layout_alignParentStart="true"
+        android:lines="2"
+        android:layout_toStartOf="@+id/taskStatusTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/task_status_text"
+        android:id="@+id/taskStatusTextView"
+        android:lines="2"
+        android:layout_below="@+id/taskNameTextView"
+        android:layout_toEndOf="@+id/taskNameTextView" />
+</RelativeLayout>
