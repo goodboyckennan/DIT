@@ -3,9 +3,14 @@ package com.kennanseno.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskReader {
 
@@ -57,13 +62,9 @@ public class TaskReader {
     }
 
     public long insertData(String taskId, String taskName, String taskDesc, int status){
-        myDb = taskDbHelper.getWritableDatabase();
-        myDb.isOpen();
 
         ContentValues values = new ContentValues();
-        if(taskId.equals("")) {
-
-        }else{
+        if(!taskId.equals("")) {
             values.put(TaskEntry.COLUMN_ID, Integer.parseInt(taskId));
         }
         values.put(TaskEntry.COLUMN_NAME, taskName);
@@ -73,9 +74,36 @@ public class TaskReader {
         long newRowId;
         newRowId = myDb.insert(TaskEntry.TABLE_NAME, null, values);
 
-        myDb.close();
         return  newRowId;
     }
 
+    public ArrayList<Task> getTasks(){
+        //Get data from db then add it to an arraylist
+        Cursor mCursor = myDb.rawQuery("SELECT * FROM " + TaskEntry.TABLE_NAME, null);
+        ArrayList<Task> taskArrayList = new ArrayList<Task>();
 
+        if (mCursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_ID)));
+                task.setName(mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_NAME)));
+                task.setDesc(mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_DESC)));
+                task.setStatus(mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_STATUS)));
+
+                taskArrayList.add(task);
+
+            } while (mCursor.moveToNext());
+        }
+
+        return taskArrayList;
+    }
+
+    public void open(){
+        myDb = taskDbHelper.getWritableDatabase();
+        myDb.isOpen();
+    }
+
+    public void close(){
+        taskDbHelper.close();
+    }
 }

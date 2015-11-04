@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SQLite</string>
+    <string name="task_id_text">ID</string>
+    <string name="task_name_text">Name</string>
+    <string name="task_desc_text">Desc</string>
+    <string name="task_status_text">status</string>
 </resources>

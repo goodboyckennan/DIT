@@ -37,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 String desc = taskDesc.getText().toString();
                 int status = Integer.parseInt(taskStatus.getText().toString());
 
+                taskReader.open();
                 long x =taskReader.insertData(id, name, desc, status);
+                taskReader.close();
+
                 Toast.makeText(MainActivity.this,"Data added with row id: " + x ,Toast.LENGTH_LONG).show();
             }
         });
