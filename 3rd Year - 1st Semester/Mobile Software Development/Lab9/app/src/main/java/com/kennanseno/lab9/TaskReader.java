@@ -1,4 +1,5 @@
-package com.kennanseno.sqlite;
+package com.kennanseno.lab9;
+
 
 
 import android.content.ContentValues;
@@ -23,7 +24,7 @@ public class TaskReader {
                     TaskEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     TaskEntry.COLUMN_NAME + "  TEXT," +
                     TaskEntry.COLUMN_DESC + " TEXT," +
-                    TaskEntry.COLUMN_STATUS + " INTEGER )";
+                    TaskEntry.COLUMN_STATUS + " TEXT)";
 
     private static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TaskEntry.TABLE_NAME;
 
@@ -58,19 +59,18 @@ public class TaskReader {
 
     }
 
-    public long insertData(String taskId, String taskName, String taskDesc, int status) {
-
-            ContentValues values = new ContentValues();
-            if (!taskId.equals("")) {
-                values.put(TaskEntry.COLUMN_ID, Integer.parseInt(taskId));
-            }
-            values.put(TaskEntry.COLUMN_NAME, taskName);
-            values.put(TaskEntry.COLUMN_DESC, taskDesc);
-            values.put(TaskEntry.COLUMN_STATUS, status);
+    public long insertData(String taskId, String taskName, String status) {
+        open();
+        ContentValues values = new ContentValues();
+        if (!taskId.equals("")) {
+            values.put(TaskEntry.COLUMN_ID, Integer.parseInt(taskId));
+        }
+        values.put(TaskEntry.COLUMN_NAME, taskName);
+        values.put(TaskEntry.COLUMN_STATUS, status);
 
         long newRowId;
         newRowId = myDb.insert(TaskEntry.TABLE_NAME, null, values);
-
+        close();
         return  newRowId;
     }
 
@@ -86,7 +86,7 @@ public class TaskReader {
                 task.setId(mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_ID)));
                 task.setName(mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_NAME)));
                 task.setDesc(mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_DESC)));
-                task.setStatus(mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_STATUS)));
+                task.setStatus(mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_STATUS)));
 
                 taskArrayList.add(task);
 
