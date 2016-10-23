@@ -56,7 +56,7 @@ ADD CONSTRAINT check_competition_value
 INSERT INTO MATCHES VALUES(1000, 1, 3, 0, 5, 'SHOULD FAIL');
 
 
---C: Check goal is less than or equal to 0
+--D: Check goal is less than or equal to 0
 ALTER TABLE MATCHES
 ADD CONSTRAINT check_goal_a_value
   CHECK(Goal_A >= 0)
