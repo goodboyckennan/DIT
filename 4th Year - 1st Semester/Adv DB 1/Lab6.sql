@@ -37,12 +37,14 @@ create table fact_results(
     CONSTRAINT fk_dimTournament FOREIGN KEY(tournament_sk) REFERENCES TournamentDim,
     CONSTRAINT fk_dimPlayer FOREIGN KEY(player_sk) REFERENCES PlayerDim,
     CONSTRAINT fk_dimTeam FOREIGN KEY(team_sk) REFERENCES TeamDim,
-    CONSTRAINT pk_factresults PRIMARY KEY (date_sk, tournament_sk, player_sk, team_s)
+    CONSTRAINT pk_factresults PRIMARY KEY (date_sk, tournament_sk, player_sk, team_sk)
 );
 
 /*CREATE STAGE AREA*/
 
-/* load dimension for teams */
+/* load dimension for TEAMS */
+/* Staging area*/
+drop table team_stage;
 create table team_stage(
     t_sk integer,
     sourceDB integer,
@@ -50,17 +52,28 @@ create table team_stage(
     t_name varchar(255)
 );
 
+drop sequence t_stage_seq;
 create sequence t_stage_seq
 start with 1
 increment by 1
 nomaxvalue;
 
 drop trigger t_stage_trigger;
-
 create trigger t_stage_trigger
 before insert on team_stage
 for each row
 begin
     select t_stage_seq.nextval into :new.t_sk from dual;
 end;
+
+select * from team_stage;
+
+insert into team_stage (sourcedb, t_id, t_name) 
+select 1, team_id, team_name from Team1;
+
+insert into team_stage (sourcedb, t_id, t_name) 
+  select 2, team_id, team_name from Team2;
+
+
+
 
