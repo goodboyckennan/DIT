@@ -25,6 +25,7 @@ print "Encrypted text: " + encryptedText
 print "Decrypted text: " + decrypt(encryptedText, key)
 
 print "--------------------------Q2----------------------------------" 
+# ----------------------------------------Q2------------------------------------
 
 encryptedText = "Vg jbhyq frrz gung, nf ur rknzvarq gur frireny cbffvovyvgvrf, n fhfcvpvba pebffrq uvf zvaq: gur zrzbel bs ubj ur uvzfrys unq orunirq va rneyvre qnlf znqr uvz nfx jurgure fbzrbar zvtug or uvqvat ure sebz gur jbeyq"
 key = 13
@@ -32,6 +33,8 @@ print "Key: " + str(key)
 print "Decrypted text: " + decrypt(encryptedText, key)
 
 print "--------------------------Q3----------------------------------" 
+# ----------------------------------------Q2------------------------------------
+
 from itertools import starmap, cycle
  
 def Vencrypt(message, key):

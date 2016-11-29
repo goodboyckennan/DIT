@@ -24,7 +24,7 @@ encryptedText =  encrypt(message, key)
 print "Encrypted text: " + encryptedText
 print "Decrypted text: " + decrypt(encryptedText, key)
 
-print "---------------------------------------------------------------------"
+print "--------------------------------Q2-------------------------------------"
 # ---------------------------------------------------------------------------
 # Q2
 
