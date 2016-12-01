@@ -1,7 +1,5 @@
 from Crypto.Cipher import ARC4
 
-key= '12345678'
-
 def encrypt(key, text):
     obj = ARC4.new(key)
     return obj.encrypt(text)
@@ -9,7 +7,8 @@ def encrypt(key, text):
 def decrypt(key, encryptedText):
     obj = ARC4.new(key)
     return obj.decrypt(encryptedText)
-
+    
+key= '12345678'
 text = 'Hello World!'
 
 encryptedText = encrypt(key, text)
