@@ -1,4 +1,6 @@
 // REMOVE ALL DOCUMENTS IN COLLECTION
+db = db.getSibling('d14123582');
+
 db.d14123582_schema.remove({});
 
 // Add courses data
@@ -125,8 +127,7 @@ db.d14123582_schema.find({
     } 
 }).pretty();
 
-// 3. Find student with 
-highest average mark
+// 3. Find student with highest average mark
 db.d14123582_schema.aggregate([
     { $unwind: '$courses' },
     {
