@@ -7,10 +7,10 @@ def fence(p, k):
         fence[rails[n % len(rails)]][n] = x
     return [c for rail in fence for c in rail if c is not None]
 
-def encryptR(p, k):
+def encrypt(p, k):
     return ''.join(fence(p, k))
 
-def decryptR(c, k):
+def decrypt(c, k):
     rng = range(len(c))
     pos = fence(rng, k)
     return ''.join(c[pos.index(k)] for k in rng)
@@ -18,6 +18,6 @@ def decryptR(c, k):
 message = "HELLO WORLD"
 key = 4
 print "Key: " + str(key)
-encryptedText =  encryptR(message, key)
+encryptedText =  encrypt(message, key)
 print "Encrypted text: " + encryptedText
-print "Decrypted text: " + decryptR(encryptedText, key)
+print "Decrypted text: " + decrypt(encryptedText, key)
