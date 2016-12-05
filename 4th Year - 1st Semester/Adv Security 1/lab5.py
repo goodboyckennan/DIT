@@ -1,14 +1,20 @@
-from random import randrange
-import datetime
+from RandomnessTests import RandomnessTester
 
-def random_date(start, l):
-    current = start
-    while l >= 0:
-        current = current + datetime.timedelta(minutes=randrange(10))
-        yield current
-        l-=1
+m = 11 * 19
+x = 9
 
-startDate = datetime.datetime(2013, 9 , 20 , 13, 00)
+def rng():
+    global x
+    x = (x * x) % m
+    return x
 
-for x in reversed(list(random_date(startDate, 10))):
-    print x.strftime("%d/%m/%y %H:%M")
+for i in range(12):
+    print (rng())
+
+bitstr = ''
+for i in range(120):
+    bitstr += bin(rng())[-1:]
+
+rng_tester = RandomnessTester(None)
+p_value = rng_tester.monobit(bitstr)
+print(bitstr)
