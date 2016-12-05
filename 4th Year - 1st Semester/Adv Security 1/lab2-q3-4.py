@@ -13,7 +13,6 @@ def translate(message, key, mode):
                 position -= LETTERS.find(key[index]) # subtract if decrypting
             # handle potential wrap-around
             position %= len(LETTERS)
-
             # add the encrypted/decrypted symbol to the end of translated.
             if char.isupper():
                 translated.append(LETTERS[position])

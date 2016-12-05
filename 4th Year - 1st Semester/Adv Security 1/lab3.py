@@ -1,5 +1,4 @@
 from Crypto.Cipher import DES
-key = '12345678'
 
 def encrypt(key, plainText, mode, iv, padding):
     if (mode == DES.MODE_ECB):
@@ -13,7 +12,7 @@ def encrypt(key, plainText, mode, iv, padding):
 
     return des.encrypt(plainText).encode('hex')
 
-def decrypt(key, cipherText, mode, iv, padding):
+def decrypt(key, cipherText, mode, iv):
     if (mode == DES.MODE_ECB):
         des = DES.new(key, mode)
     elif (mode == DES.MODE_CBC):
@@ -21,22 +20,24 @@ def decrypt(key, cipherText, mode, iv, padding):
 
     return des.decrypt(cipherText.decode('hex'))
 
+key = '12345678'
+iv = '00000000'
+
 print "--------------------------Q1----------------------------------" 
 text = 'AAAABBBBAAAABBBB'
 cipherText = encrypt(key, text, DES.MODE_ECB, '', False)
 print "Encrypted text: " + cipherText
-print "Decrypted text: " + decrypt(key, cipherText, DES.MODE_ECB, '', False)
+print "Decrypted text: " + decrypt(key, cipherText, DES.MODE_ECB, '')
 
 print "--------------------------Q2----------------------------------" 
 text = 'AAAABBBBAAAABBBB'
-iv = '00000000'
 cipherText = encrypt(key, text, DES.MODE_CBC, iv, False)
 print "Encrypted text: " + cipherText
-print "Decrypted text: " + decrypt(key, cipherText, DES.MODE_CBC, iv, False)
+print "Decrypted text: " + decrypt(key, cipherText, DES.MODE_CBC, iv)
 
 print "--------------------------Q3----------------------------------"
 text = 'AAAABBBBCCCC' 
 cipherText = encrypt(key, text, DES.MODE_ECB, '', True)
 print cipherText
-decryptedText = decrypt(key, cipherText, DES.MODE_ECB, '', True)
+decryptedText = decrypt(key, cipherText, DES.MODE_ECB, '')
 print "Decrypted text: ", decryptedText, " length: ", len(decryptedText)
