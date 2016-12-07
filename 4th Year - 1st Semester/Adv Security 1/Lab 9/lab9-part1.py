@@ -13,7 +13,7 @@ key = rsa.generate_private_key(
     backend=default_backend()
 )
 # Write our key to disk for safe keeping
-with open("part1.key", "wb") as f:
+with open("part1-key.pem", "wb") as f:
     privateKey = key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.TraditionalOpenSSL,
@@ -51,7 +51,7 @@ cert = x509.CertificateBuilder().subject_name(
 # Sign our certificate with our private key
 ).sign(key, hashes.SHA256(), default_backend())
 # Write our certificate out to disk.
-with open("certificate.crt", "wb") as f:
+with open("selfsigned-cert.pem", "wb") as f:
     cert = cert.public_bytes(serialization.Encoding.PEM)
     print cert
     f.write(cert)
