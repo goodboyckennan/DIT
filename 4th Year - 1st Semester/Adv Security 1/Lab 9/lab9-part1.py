@@ -13,12 +13,14 @@ key = rsa.generate_private_key(
     backend=default_backend()
 )
 # Write our key to disk for safe keeping
-with open("rootkey.pem", "wb") as f:
-    f.write(key.private_bytes(
+with open("part1.key", "wb") as f:
+    privateKey = key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.TraditionalOpenSSL,
         encryption_algorithm=serialization.BestAvailableEncryption(b"passphrase"),
-    ))
+    )
+    print privateKey
+    f.write(privateKey)
 
 # Various details about who we are. For a self-signed certificate the
 # subject and issuer are always the same.
@@ -29,6 +31,7 @@ subject = issuer = x509.Name([
     x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"CoderDojo"),
     x509.NameAttribute(NameOID.COMMON_NAME, u"localhost"),
 ])
+
 cert = x509.CertificateBuilder().subject_name(
     subject
 ).issuer_name(
@@ -48,10 +51,7 @@ cert = x509.CertificateBuilder().subject_name(
 # Sign our certificate with our private key
 ).sign(key, hashes.SHA256(), default_backend())
 # Write our certificate out to disk.
-with open("certificate.pem", "wb") as f:
-    f.write(cert.public_bytes(serialization.Encoding.PEM))
-
-
-with open("rootkey.pem", "r") as f:
-
-    print 
+with open("certificate.crt", "wb") as f:
+    cert = cert.public_bytes(serialization.Encoding.PEM)
+    print cert
+    f.write(cert)
