@@ -1,0 +1,65 @@
+//Add Tom and make him friend of Mary
+MATCH (m:Person {name: "Mary"})
+CREATE (t:Person { name: "Tom", country: "Spain", sport: "Football"}),
+(t)-[:FRIEND_OF]->(m)
+
+//add Bill and make him friend of Mary and Denis
+MATCH (m:Person {name:"Mary"}),
+    (d:Person {name:"Denis"})
+CREATE (b:Person {name: "Bill", age: 23, country: "Ireland"}),
+(b)-[:FRIEND_OF]->(d),
+(b)-[:FRIEND_OF]->(m)
+
+//Show the age of Denis and his friends
+MATCH (d:Person {name:"Denis"})-[:FRIEND_OF]->(p:Person)
+return d,p
+
+//Show all the person from Scotland
+MATCH (p:Person {country:"Scotland"}) return p
+
+//Show all the person with age less or equal than 20 from Ireland
+MATCH (p:Person)
+WHERE p.country="Ireland" AND p.age <= 20
+RETURN p
+
+//Show all the person with age less or equal 30 playing Football
+MATCH (p:Person)
+WHERE p.sport="Football" AND p.age <= 30
+RETURN p
+
+//Count the person by country
+MATCH(p:Person)
+RETURN p.country, count(p.name)
+ORDER BY p.country
+
+//Show the average age of the person group by sport
+MATCH(p:Person)
+RETURN p.sport, avg(p.age)
+ORDER BY p.sport
+
+//Show all the direct friends of Mary
+MATCH(m:Person {name:"Mary"})-[:FRIEND_OF*1]->(p:Person)
+RETURN m, p
+
+//Show all the friends of Paul with maximum distance of 5 steps
+MATCH(m:Person {name:"Paul"})-[:FRIEND_OF*..5]->(p:Person)
+RETURN m, p
+
+//count all the friends of Paul with maximum distance by nationality
+MATCH(m:Person {name:"Paul"})-[:FRIEND_OF*..5]->(p:Person)
+RETURN p.country, count(p)
+ORDER BY p.country
+
+//Show the paths between Paul and Lisa. 
+//For each path show the length. How many paths are there?
+MATCH path = (p:Person {name:"Paul"})-[:FRIEND_OF]->(l:Person {name:"Lisa"})
+RETURN path, length(path)
+
+//Show the shortest path between Paul and Lisa
+MATCH path = shortestPath((p:Person {name:"Paul"})-[:FRIEND_OF]->(l:Person {name:"Lisa"}))
+RETURN path, length(path)
+
+//Show(if exists) a connection between Mary and all her friends, where path can only
+//contain persons that play Football
+MATCH (m:Person {name="Mary"})-[:FRIEND_OF*1]->(p:Person {sport:"Football"})
+RETURN m, p

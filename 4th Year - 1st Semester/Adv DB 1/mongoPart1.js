@@ -1,6 +1,6 @@
-// REMOVE ALL DOCUMENTS IN COLLECTION
 db = db.getSibling('d14123582');
 
+// REMOVE ALL DOCUMENTS IN COLLECTION
 db.d14123582_schema.remove({});
 
 // Add courses data
