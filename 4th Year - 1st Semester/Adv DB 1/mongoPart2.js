@@ -3,7 +3,7 @@ db = db.getSibling('d14123582');
 //Remove is document exists
 db.d14123582_teams.remove({});
 
-// Add teams
+//1. Add teams
 db.d14123582_teams.insert({
 	team_id: "eng1",
 	date_founded: new Date("Oct 04, 1896"),
@@ -152,15 +152,32 @@ db.d14123582_teams.update(
 db.d14123582_teams.find({}).sort({ 'date_founded': 1 }).limit(1).pretty();
 
 //4. update the number of goal of all the Real Madrid Players by 3 goals each
-// db.d14123582_teams.update(
-//     { team_id: 'spa2'},
-//     {
-//         $inc: {
-//             'goal': 3
-//         }
-//     },
-//     {multi: true}
-// );
+db.d14123582_teams.find({ team_id: 'spa2' }).forEach(function (doc) {
+    doc.players.forEach(function (player) { 
+        player.goal += 3;
+    })
+    db.d14123582_teams.save(doc);
+});
+
+// 5. using a cursor, update the number of caps of all the "Serie A" teams by incrementing them by 10% (round it!)
+db.d14123582_teams.find({ league: "Serie A" }).forEach(function (doc) {
+    doc.players.forEach(function (player) {
+        player.caps *= 1.1;
+    })
+    db.d14123582_teams.save(doc);
+});
+
+// 6. update the points of Arsenal to be equal to the point of Barcelona
+var barcelona = db.d14123582_teams.find({name: 'Barcelona'}).toArray();
+db.d14123582_teams.update(
+    { name: 'Arsenal' }, 
+    { $set: 
+        { 
+            points: barcelona[0].points
+        } 
+    }
+);
+
 
 //7. Find all the players over 30 years old containing the string "es"
 db.d14123582_teams.find(
@@ -195,11 +212,3 @@ db.d14123582_teams.aggregate([
      { $sort: {totalGoals: -1}}
 ]);
 
-//6. update the points of Arsenal to be equal to the point of Barcelona
-var barcelona = db.d14123582_teams.find({name: 'Barcelona'}).toArray();
-var arsenal = db.d14123582_teams.find({name: 'Arsenal'});
-
-arsenal.forEach(function(myDoc) {
-    myDoc.points = barcelona[0].points;
-    db.d14123582_teams.save({'_id': myDoc._id, myDoc});
-});

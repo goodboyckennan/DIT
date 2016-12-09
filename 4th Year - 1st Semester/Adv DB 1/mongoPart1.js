@@ -1,7 +1,10 @@
 db = db.getSibling('d14123582');
 
-// REMOVE ALL DOCUMENTS IN COLLECTION
+// REMOVE ALL DOCUMENTS IN COLLECTIONS
 db.d14123582_schema.remove({});
+db.result_collection.remove({});
+db.pass_collection.remove({});
+db.fail_collection.remove({});
 
 // Add courses data
 db.d14123582_schema.insertMany(
@@ -112,20 +115,32 @@ db.d14123582_schema.insertMany(
 );
 
 // 1. find students that failed the exam
-db.d14123582_schema.find({
-    'courses.mark': {
-        $lt: 40
-    }
-}).pretty();
+db.d14123582_schema.aggregate([ 
+    { $unwind: '$courses'}, 
+    { $match: 
+        { 'courses.mark': 
+            { "$lt" : 40 } 
+        } 
+    }, 
+    { $out: "fail_collection" } 
+]);
 
 // 2. Find people that passed each exams
-db.d14123582_schema.find({ 
-    'courses.mark': { 
-        $not: {
-            $lt: 40
+db.d14123582_schema.aggregate([ 
+    { $unwind: '$courses'}, 
+    { $match: 
+        { 'courses.mark': 
+            { "$gte" : 40 } 
         } 
-    } 
-}).pretty();
+    },
+    { $group:
+        {
+            _id: '$courses.courseid',
+            avgMark: { $avg: '$courses.mark' }
+        }
+    }, 
+    { $out: "pass_collection" } 
+]);
 
 // 3. Find student with highest average mark
 db.d14123582_schema.aggregate([
@@ -137,6 +152,7 @@ db.d14123582_schema.aggregate([
         }
     },
     { $sort: {averageMark: -1}},
-    { $limit: 1}
+    { $limit: 1},
+    { $out: 'result_collection' }
 ]);
 

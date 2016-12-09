@@ -8,7 +8,7 @@ def addPadding(data):
     return data
 
 def chunks(longdata, x):
-    for i in range(8, len(longdata), x):
+    for i in range(0, len(longdata), x):
         yield longdata[i:i + x]
 
 iv = '00000000'
