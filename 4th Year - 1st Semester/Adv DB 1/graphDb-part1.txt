@@ -61,5 +61,5 @@ RETURN path, length(path)
 
 //Show(if exists) a connection between Mary and all her friends, where path can only
 //contain persons that play Football
-MATCH (m:Person {name="Mary"})-[:FRIEND_OF*1]->(p:Person {sport:"Football"})
+MATCH (m:Person {name:"Mary"})-[:FRIEND_OF*1]->(p:Person {sport:"Football"})
 RETURN m, p

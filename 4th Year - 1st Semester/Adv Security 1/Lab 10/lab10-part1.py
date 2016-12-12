@@ -1,16 +1,15 @@
 from PIL import Image
-from PIL import ImageOps
 
 image = Image.open('image.jpg')
-im = image.convert('RGB')
+im = image.convert('L')
 imgWidth, imgHeight = im.size
-output = ''
 
+# loop and print through each pixel
 for x in range (0, imgHeight):
    for y in range(0, imgWidth):
-       r, g, b = im.getpixel((y,x))
-       output += chr(r) + chr(g) + chr(b)
+       print 'x:' +  str(x) + ' y:' + str(y) + ' value:' + str(im.getpixel((y,x)))
 
-print output
-
+# save greyscale picture
 im.save('greyscale.png', 'PNG')
+
+
