@@ -8,7 +8,6 @@ drop table team2;
 drop table tournament1;
 drop table tournament2;
 
-
 Create Table Team1(
 Team_id integer primary key,
 Team_name varchar(100)
@@ -69,7 +68,6 @@ CONSTRAINT  FK_tournament2 FOREIGN KEY (t_id) REFERENCES tournament2,
 CONSTRAINT PK_Results2 PRIMARY KEY (t_id,p_id)
 );
 
-/* END ER DIAGRAM */
 
 
 /* data */
@@ -145,7 +143,6 @@ INSERT INTO RESULTS2 (T_ID, P_ID, RANK, PRICE) VALUES (6, 4, 1, 12000);
 
 
 /*CREATE DIMENSION TABLES*/
-
 drop table fact_results;
 drop table DateDim;
 drop table TournamentDim;
@@ -192,10 +189,16 @@ create table fact_results(
     CONSTRAINT pk_factresults PRIMARY KEY (date_sk, tournament_sk, player_sk, team_sk)
 );
 
-/*CREATE STAGE AREA*/
+drop table player_stage;
+create table player_stage(
+    p_sk integer,
+    sourceDB integer,
+    p_id integer,
+    p_name varchar(100),
+    p_sname varchar(100),
+    t_id integer
+);
 
-/* load dimension for TEAMS */
-/* Staging area*/
 drop table team_stage;
 create table team_stage(
     t_sk integer,
@@ -203,6 +206,33 @@ create table team_stage(
     t_id integer,
     t_name varchar(100)
 );
+
+drop table tournament_stage;
+create table tournament_stage(
+    t_sk integer,
+    sourceDB integer,
+    t_id integer,
+    t_desc varchar(100),
+    t_date varchar(100),
+    t_total_price integer
+);
+
+drop table date_stage;
+create table date_stage(
+	d_sk integer,
+	d_day integer,
+	d_month integer,
+	d_year integer,
+	d_week integer,
+	d_quarter integer,
+	d_dayOfWeek integer,
+  d_fullDate date
+);
+
+
+/*CREATE STAGE AREA*/
+
+/* load staging for TEAMS */
 
 drop sequence t_stage_seq;
 create sequence t_stage_seq
@@ -218,29 +248,235 @@ begin
     select t_stage_seq.nextval into :new.t_sk from dual;
 end;
 
-select * from team_stage;
-
 INSERT INTO team_stage (sourcedb, t_id, t_name) 
-SELECT 1, team_id, team_name FROM Team1
-WHERE NOT EXISTS( 
-    SELECT * FROM team_stage WHERE Team1.team_name = team_stage.t_name);
+SELECT 1, team_id, team_name FROM Team1;
+
 
 
 insert into team_stage (sourcedb, t_id, t_name) 
-select 2, team_id, team_name from Team2
-WHERE NOT EXISTS( 
-    SELECT * FROM team_stage WHERE Team2.team_name = team_stage.t_name);
-    
-/* INSERT INTO TEAM DIMENTSION */
-INSERT INTO TeamDim (team_sk, team_name)
-SELECT t_sk, t_name FROM team_stage;
+select 2, team_id, team_name from Team2;
 
-SELECT * FROM TeamDim;
 
-/* load dimension for PLAYERS */
+
+/* load staging for PLAYERS */
 /* Staging area*/
 
+drop sequence p_stage_seq;
+create sequence p_stage_seq
+start with 1
+increment by 1
+nomaxvalue;
+
+drop trigger p_stage_trigger;
+create trigger p_stage_trigger
+before insert on player_stage
+for each row
+begin
+    select p_stage_seq.nextval into :new.p_sk from dual;
+end;
+
+
+INSERT INTO player_stage (sourcedb, p_id, p_name, p_sname, t_id) 
+SELECT 1, p_id, p_name, p_sname, team_id FROM players1;
     
+INSERT INTO player_stage (sourcedb, p_id, p_name, p_sname, t_id) 
+SELECT 2, p_id, p_name, p_sname, team_id FROM players2;
+    
+SELECT * FROM PlayerDim;
+
+INSERT INTO PlayerDim (player_sk, player_name)
+SELECT p_sk, p_name || ' ' || p_sname FROM player_stage;
+
+
+/* load stage for TOURNAMENT */
+/* Staging area*/
+
+
+drop sequence tournament_stage_seq;
+create sequence tournament_stage_seq
+start with 1
+increment by 1
+nomaxvalue;
+
+drop trigger tournament_stage_trigger;
+create trigger tournament_stage_trigger
+before insert on tournament_stage
+for each row
+begin
+    select tournament_stage_seq.nextval into :new.t_sk from dual;
+end;
+
+INSERT INTO tournament_stage (sourcedb, t_id, t_desc, t_date, t_total_price) 
+SELECT 1, t_id, t_description, t_date, total_price FROM tournament1;
+    
+INSERT INTO tournament_stage (sourcedb, t_id, t_desc, t_date, t_total_price) 
+SELECT 2, t_id, t_description, t_date, total_price FROM tournament2;
+
+INSERT INTO TournamentDim (tournament_sk, tournament_desc, total_price)
+SELECT t_sk, t_desc, t_total_price FROM tournament_stage;
+
+/* load stage for date */
+/* Staging area*/
+
+drop sequence date_stage_seq;
+create sequence date_stage_seq
+start with 1
+increment by 1
+nomaxvalue;
+
+drop trigger date_stage_trigger;
+create trigger date_stage_trigger
+before insert on date_stage
+for each row
+begin
+select date_stage_seq.nextval into :new.d_sk from dual;
+end;
+
+insert into date_stage(d_year, d_day, d_month,d_week,d_quarter,d_dayOfWeek, d_fullDate) select cast(to_char(t_date,'YYYY') as integer), cast(to_char(t_date,'DD') as integer), cast(to_char(t_date,'MM') as integer),
+to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'WW')),to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'Q')),to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'D')), t_date from tournament1;
+
+insert into date_stage(d_year, d_day, d_month,d_week,d_quarter,d_dayOfWeek, d_fullDate) select cast(to_char(t_date,'YYYY') as integer), cast(to_char(t_date,'DD') as integer), cast(to_char(t_date,'MM') as integer),
+to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'WW')),to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'Q')),to_number(to_char(to_date(t_date,'DD/MM/YYYY'),'D')), t_date from tournament2;
+
+INSERT INTO DateDim (date_sk, day, month, year, week, quarter, dayofweek)
+SELECT d_sk, d_day, d_month, d_year, d_week, d_quarter, d_dayOfWeek FROM date_stage;
+
+/*Dimension fact_results*/
+/* Staging area */
+drop table facts_stage;
+create table facts_stage(
+	t_sk integer,
+	t_id integer,
+	p_sk integer,
+	p_id integer,
+	trn_sk integer,
+	trn_id integer,
+  d_sk integer,
+	t_date date,
+	rank integer,
+	price float,
+	sourceDB integer
+);
+
+insert into facts_stage(trn_id, p_id, t_id, rank, price, sourcedb) 
+select r.t_id, r.p_id, p.team_id, r.rank, r.price, 1 from Results1 r, Players1 p
+where r.p_id = p.p_id;
+
+insert into facts_stage(trn_id, p_id, t_id, rank, price, sourcedb) 
+select r.t_id, r.p_id, p.team_id, r.rank, r.price, 2 from Results2 r, Players2 p
+where r.p_id = p.p_id;
+
+/*Assign Surrogate Keys*/
+/*Team SK*/
+update facts_stage
+set t_sk=
+	(select team_stage.t_sk from
+	team_stage where (team_stage.sourceDB=facts_stage.sourceDB and
+	team_stage.t_id = facts_stage.t_id));
+  
+/*Player SK*/
+update facts_stage
+set p_sk=
+	(select player_stage.p_sk from
+	player_stage where (player_stage.sourceDB=facts_stage.sourceDB and
+	player_stage.p_id = facts_stage.p_id));
+	
+/*Tournament SK*/
+update facts_stage
+set trn_sk=
+	(select tournament_stage.t_sk from
+	tournament_stage where (tournament_stage.sourceDB=facts_stage.sourceDB and
+	tournament_stage.t_id = facts_stage.trn_id));
+
+update facts_stage
+set t_date =
+	(select tournament_stage.t_date from
+	tournament_stage where (tournament_stage.sourceDB=facts_stage.sourceDB and
+	tournament_stage.t_id = facts_stage.trn_id));
+  
+update facts_stage
+set d_sk =
+	(select date_stage.d_sk from
+	date_stage where (date_stage.d_day = cast(to_char(facts_stage.t_date,'DD') as integer) and
+                    date_stage.d_month = cast(to_char(facts_stage.t_date,'MM') as integer) and
+                    date_stage.d_year = cast(to_char(facts_stage.t_date,'YYYY') as integer))); 
+  
+SELECT * FROM team_stage;
+SELECT * FROM tournament_stage;
+ 
+/* Clean fact_stage*/ 
+UPDATE facts_stage
+SET t_sk = 1
+WHERE t_sk = 7 AND sourceDB = 2;
+
+UPDATE facts_stage
+SET p_sk = 5
+WHERE p_sk = 8 AND sourceDB = 2;
+
+UPDATE facts_stage
+SET price = price * 0.7
+WHERE sourceDB = 2;
+
+UPDATE facts_stage
+SET price
+
+/* PUSH TO DIMENSIONS*/
+/*Team*/
+INSERT INTO TeamDim (team_sk, team_name)
+SELECT t_sk, t_name FROM team_stage WHERE sourcedb = 1;
+
+INSERT INTO TeamDim (team_sk, team_name)
+SELECT t_sk, t_name FROM team_stage 
+WHERE NOT EXISTS (
+  SELECT * FROM TeamDim WHERE team_stage.t_name = TeamDim.team_name
+);
+
+/*Player*/
+INSERT INTO PlayerDim (player_sk, player_name)
+SELECT p_sk, p_name || ' ' || p_sname FROM player_stage WHERE sourcedb = 1;
+    
+INSERT INTO PlayerDim (player_sk, player_name)
+SELECT p_sk, p_name || ' ' || p_sname FROM player_stage 
+WHERE NOT EXISTS (
+  SELECT * FROM PlayerDim WHERE player_stage.p_name || ' ' || player_stage.p_sname = PlayerDim.player_name
+);
+
+/* Tournament*/
+SELECT * FROM tournamentDim;
+describe TournamentDim;
+
+INSERT INTO tournamentDim (tournament_sk, tournament_desc, total_price)
+SELECT t_sk, t_desc, t_total_price FROM tournament_stage WHERE sourcedb = 1;
+
+INSERT INTO tournamentDim (tournament_sk, tournament_desc, total_price)
+SELECT t_sk, t_desc, t_total_price FROM tournament_stage
+WHERE NOT EXISTS (
+  SELECT * FROM tournamentDim WHERE tournament_stage.t_desc = tournamentDim.tournament_desc
+);
+
+/*Date*/
+INSERT INTO dateDim (date_sk, day, month, year, week, quarter, dayofweek)
+SELECT d_sk, d_day, d_month, d_year, d_week, d_quarter, d_dayofweek FROM date_stage;
+
+/* push fact results*/
+INSERT INTO FACT_RESULTS (PLAYER_SK, TOURNAMENT_SK, TEAM_SK, DATE_SK, RANK, PRICE)
+SELECT p_sk, trn_sk, t_sk, d_sk, rank, price FROM FACTS_STAGE;
+
+
+commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
     
