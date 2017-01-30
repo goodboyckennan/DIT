@@ -56,8 +56,8 @@ app.get('/purchases/:id', function(req, res) {
 	var data = {
 		id: req.params.id
 	}
-	
-    db.purchases.find(data function(err, result) {
+
+    db.purchases.find(data, function(err, result) {
 		res.send(result);
 	})
 });
