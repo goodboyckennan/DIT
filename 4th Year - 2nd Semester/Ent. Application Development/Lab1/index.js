@@ -15,7 +15,7 @@ app.listen(3000, function() {
 });
 
 app.get('/products', function(req, res) {
-    	db.products.find({}, function(err, result) {
+	db.products.find({}, function(err, result) {
 		res.send(result);
 	})
 });
@@ -28,6 +28,36 @@ app.get('/users', function(req, res) {
 
 app.get('/purchases', function(req, res) {
     db.purchases.find({}, function(err, result) {
+		res.send(result);
+	})
+});
+
+app.get('/products/:id', function(req, res) {
+	var data = {
+		id: req.params.id
+	}
+
+	db.products.find(data, function(err, result) {
+		res.send(result);
+	})
+});
+
+app.get('/users/:id', function(req, res) {
+	var data = {
+		id: req.params.id
+	}
+	
+    db.users.find(data, function(err, result) {
+		res.send(result);
+	})
+});
+
+app.get('/purchases/:id', function(req, res) {
+	var data = {
+		id: req.params.id
+	}
+	
+    db.purchases.find(data function(err, result) {
 		res.send(result);
 	})
 });
